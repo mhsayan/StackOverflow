@@ -31,7 +31,7 @@ namespace StackOverflow.Web.Controllers
             _logger = logger;
         }
 
-        public async Task<IActionResult> Register(string returnUrl = null)
+        public async Task<IActionResult> Register(string? returnUrl = null)
         {
             var model = new RegisterModel();
             model.ReturnUrl = returnUrl;
@@ -69,7 +69,7 @@ namespace StackOverflow.Web.Controllers
         [TempData]
         public string ErrorMessage { get; set; }
 
-        public async Task<IActionResult> Login(string returnUrl = null)
+        public async Task<IActionResult> Login(string? returnUrl = null)
         {
             if (!string.IsNullOrEmpty(ErrorMessage))
             {
@@ -126,7 +126,7 @@ namespace StackOverflow.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Logout(string returnUrl = null)
+        public async Task<IActionResult> Logout(string? returnUrl = null)
         {
             await _signInManager.SignOutAsync();
             _logger.LogInformation("User logged out.");

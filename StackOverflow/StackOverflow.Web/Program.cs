@@ -8,6 +8,7 @@ using Serilog.Events;
 using StackOverflow.Membership;
 using StackOverflow.Membership.Contexts;
 using StackOverflow.Membership.Entities;
+using StackOverflow.Membership.Seeds;
 using StackOverflow.Membership.Services;
 using StackOverflow.Web;
 
@@ -82,6 +83,7 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
+builder.Services.AddSingleton<ModeratorDataSeed>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddRazorPages();
 builder.Services.AddControllersWithViews();
