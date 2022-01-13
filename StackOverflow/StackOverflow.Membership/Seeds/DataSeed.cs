@@ -10,9 +10,8 @@ namespace StackOverflow.Membership.Seeds
             {
                 return new Role[]
                 {
-                    //new Role { Id = Guid.NewGuid(), Name = "Admin", NormalizedName = "ADMIN", ConcurrencyStamp = Guid.NewGuid().ToString() },
-                    //new Role { Id = Guid.NewGuid(), Name = "Teacher", NormalizedName = "TEACHER", ConcurrencyStamp = Guid.NewGuid().ToString() },
-                    //new Role { Id = Guid.NewGuid(), Name = "Student", NormalizedName = "STUDENT", ConcurrencyStamp = Guid.NewGuid().ToString() }
+                    new Role { Id = Guid.NewGuid(), Name = "Moderator", NormalizedName = "MODERATOR", ConcurrencyStamp = Guid.NewGuid().ToString() },
+                    new Role { Id = Guid.NewGuid(), Name = "User", NormalizedName = "USER", ConcurrencyStamp = Guid.NewGuid().ToString() }
                 };
             }
         }
