@@ -92,6 +92,11 @@ try
 {
     var app = builder.Build();
 
+    var scope = app.Services.GetAutofacRoot();
+    var moderatorDataSeed = new ModeratorDataSeed();
+    moderatorDataSeed.Resolve(scope);
+    await moderatorDataSeed.SeedUserAsync();
+
     Log.Information("Application Starting up");
 
     // Configure the HTTP request pipeline.
