@@ -35,5 +35,19 @@ namespace StackOverflow.Platform.Services
             _unitOfWork.Questions.Add(questionEntity);
             _unitOfWork.Save();
         }
+
+        public IList<BO.Question> GetQuestionListAsync()
+        {
+            var questionEntities = _unitOfWork.Questions.GetAll();
+            var questions = new List<BO.Question>();
+
+            foreach (var entity in questionEntities)
+            {
+                var question = _mapper.Map<BO.Question>(entity);
+                questions.Add(question);
+            }
+
+            return questions;
+        }
     }
 }

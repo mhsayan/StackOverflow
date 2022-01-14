@@ -55,9 +55,9 @@ namespace StackOverflow.Web.Controllers
             return View();
         }
 
-        public IActionResult Delete()
-        {
-            return RedirectToAction(nameof(Index));
-        }
+        //public IActionResult Delete()
+        //{
+        //    //return RedirectToAction(nameof(Index));
+        //}
     }
 }

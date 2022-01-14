@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using StackOverflow.Web.Models;
 using StackOverflow.Web.Models.Question;
 
 namespace StackOverflow.Web
@@ -7,6 +8,7 @@ namespace StackOverflow.Web
     {
         protected override void Load(ContainerBuilder builder)
         {
+            builder.RegisterType<IndexModel>().AsSelf();
             builder.RegisterType<CreateQuestionModel>().AsSelf();
 
             base.Load(builder);

@@ -1,8 +1,39 @@
-﻿@{
+﻿@using StackOverflow.Platform.BusinessObjects
+@model StackOverflow.Web.Models.IndexModel
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container">
+        <div class="row mb-2">
+            <div class="col-sm-8">
+                <h1 class="m-0"> All Questions</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-4">
+                <a type="Button" asp-area="" asp-controller="Question" asp-action="Create">Ask Question</a>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
 </div>
+<!-- /.content-header -->
+@foreach (var question in (IEnumerable<Question>)ViewData["Questions"])
+{
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title">@question.Title</h2>
+
+                    <p class="card-text">
+                        Asked : @question.CreateDate
+                    </p>
+                    <p class="card-text">
+                        Asked : @Html.Raw(@question.Body)
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+} 

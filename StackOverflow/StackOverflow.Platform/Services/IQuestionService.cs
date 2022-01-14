@@ -11,5 +11,6 @@ namespace StackOverflow.Platform.Services
     public interface IQuestionService
     {
         Task CreateQuestionAsync(BO.Question question);
+        IList<BO.Question> GetQuestionListAsync();
     }
 }
