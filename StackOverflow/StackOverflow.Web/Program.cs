@@ -93,6 +93,7 @@ builder.Services.AddSingleton<ModeratorDataSeed>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddRazorPages();
 builder.Services.AddControllersWithViews();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 try
 {
