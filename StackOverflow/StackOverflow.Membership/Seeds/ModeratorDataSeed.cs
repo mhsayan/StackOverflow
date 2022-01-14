@@ -28,6 +28,8 @@ namespace StackOverflow.Membership.Seeds
         {
             var moderatorUser = new ApplicationUser
             {
+                FirstName = "David",
+                LastName = "Warner",
                 UserName = "moderator@stackoverflow.com",
                 Email = "moderator@stackoverflow.com",
                 EmailConfirmed = true

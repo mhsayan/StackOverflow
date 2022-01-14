@@ -118,7 +118,6 @@ try
 
     app.UseAuthentication();
     app.UseAuthorization();
-    app.UseSession();
 
     app.MapControllerRoute(
         name: "areas",
