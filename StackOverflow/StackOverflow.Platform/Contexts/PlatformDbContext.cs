@@ -34,9 +34,16 @@ namespace StackOverflow.Platform.Contexts
                 .HasMany<Question>()
                 .WithOne(x => x.ApplicationUser);
 
+            modelBuilder.Entity<Question>()
+                .HasMany(q => q.Comments)
+                .WithOne(c => c.Question)
+                .HasForeignKey(c => c.QuestionId)
+                .OnDelete(DeleteBehavior.Cascade);
+
             base.OnModelCreating(modelBuilder);
         }
 
         public DbSet<Question> Questions { get; set; }
+        public DbSet<Comment> Comments { get; set; }
     }
 }

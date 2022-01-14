@@ -25,6 +25,7 @@
   <ItemGroup>
     <ProjectReference Include="..\StackOverflow.Data\StackOverflow.Data.csproj" />
     <ProjectReference Include="..\StackOverflow.Membership\StackOverflow.Membership.csproj" />
+    <ProjectReference Include="..\StackOverflow.Platform\StackOverflow.Platform.csproj" />
   </ItemGroup>
 
 </Project>

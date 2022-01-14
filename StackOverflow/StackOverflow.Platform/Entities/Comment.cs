@@ -1,0 +1,20 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using StackOverflow.Data;
+
+namespace StackOverflow.Platform.Entities
+{
+    public class Comment : IEntity<Guid>
+    {
+        public Guid Id { get; set; }
+        public Guid QuestionId { get; set; }
+        public Question Question { get; set; }
+        public string Body { get; set; }
+        public bool IsAnswer { get; set; }
+        public int UpVote { get; set; }
+        public int DownVote { get; set; }
+    }
+}

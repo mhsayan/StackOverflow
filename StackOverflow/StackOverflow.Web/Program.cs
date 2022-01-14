@@ -10,6 +10,8 @@ using StackOverflow.Membership.Contexts;
 using StackOverflow.Membership.Entities;
 using StackOverflow.Membership.Seeds;
 using StackOverflow.Membership.Services;
+using StackOverflow.Platform;
+using StackOverflow.Platform.Contexts;
 using StackOverflow.Web;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,12 +21,16 @@ var migrationAssemblyName = typeof(Program).Assembly.FullName;
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString, b =>
         b.MigrationsAssembly(migrationAssemblyName)));
+builder.Services.AddDbContext<PlatformDbContext>(options =>
+    options.UseSqlServer(connectionString, b =>
+        b.MigrationsAssembly(migrationAssemblyName)));
 
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
 {
     containerBuilder.RegisterModule(new WebModule());
     containerBuilder.RegisterModule(new MembershipModule(connectionString, migrationAssemblyName));
+    containerBuilder.RegisterModule(new PlatformModule(connectionString, migrationAssemblyName));
 });
 
 builder.Host.UseSerilog((ctx, lc) => lc

@@ -9,6 +9,7 @@ namespace StackOverflow.Platform.Profiles
         public PlatformProfile()
         {
             CreateMap<EO.Question, BO.Question>().ReverseMap();
+            CreateMap<EO.Comment, BO.Comment>().ReverseMap();
         }
     }
 }
