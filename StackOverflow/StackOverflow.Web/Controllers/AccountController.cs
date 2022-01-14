@@ -48,7 +48,7 @@ namespace StackOverflow.Web.Controllers
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName };
                 var result = await _userManager.CreateAsync(user, model.Password);
-                await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("view_permission", "true"));
+                await _userManager.AddToRoleAsync(user, "User");
 
                 if (result.Succeeded)
                 {
