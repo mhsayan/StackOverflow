@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using StackOverflow.Membership.Entities;
+using StackOverflow.Web.Models.Question;
 using BO = StackOverflow.Platform.BusinessObjects;
 
 namespace StackOverflow.Web.Profiles
@@ -8,6 +9,7 @@ namespace StackOverflow.Web.Profiles
     {
         public WebProfile()
         {
+            CreateMap<CreateQuestionModel, BO.Question>().ReverseMap();
         }
     }
 }

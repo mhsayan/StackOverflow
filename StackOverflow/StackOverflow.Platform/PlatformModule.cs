@@ -31,6 +31,8 @@ namespace StackOverflow.Platform
 
             builder.RegisterType<QuestionService>().As<IQuestionService>()
                 .InstancePerLifetimeScope();
+            builder.RegisterType<ProfileService>().As<IProfileService>()
+                .InstancePerLifetimeScope();
 
             builder.RegisterType<QuestionRepository>().As<IQuestionRepository>()
                 .InstancePerLifetimeScope();
