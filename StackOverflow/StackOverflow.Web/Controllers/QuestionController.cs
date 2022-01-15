@@ -1,9 +1,11 @@
 ﻿using Autofac;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StackOverflow.Web.Models.Question;
 
 namespace StackOverflow.Web.Controllers
 {
+    [Authorize]
     public class QuestionController : Controller
     {
         private readonly ILogger<QuestionController> _logger;
@@ -16,9 +18,14 @@ namespace StackOverflow.Web.Controllers
             _scope = scope;
         }
 
-        public IActionResult Details()
+        [AllowAnonymous]
+        public IActionResult Details(Guid id)
         {
-            return View();
+            var model = _scope.Resolve<QuestionDetailsModel>();
+            model.Resolve(_scope);
+            ViewBag.Question = model.GetQuestionDetailsAsync(id);
+
+            return View(model);
         }
 
         [HttpGet]

@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+﻿using System.Linq.Dynamic.Core;
+using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using StackOverflow.Platform.Exceptions;
 using StackOverflow.Platform.UnitOfWorks;
 using BO = StackOverflow.Platform.BusinessObjects;
@@ -48,6 +50,14 @@ namespace StackOverflow.Platform.Services
             }
 
             return questions;
+        }
+
+        public BO.Question GetQuestionAsync(Guid id)
+        {
+            var questionEntity = _unitOfWork.Questions.Get(q => q.Id == id, "Comments").FirstOrDefault();
+            var question = _mapper.Map<BO.Question>(questionEntity);
+
+            return question;
         }
     }
 }

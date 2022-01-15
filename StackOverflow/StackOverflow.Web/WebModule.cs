@@ -10,6 +10,7 @@ namespace StackOverflow.Web
         {
             builder.RegisterType<IndexModel>().AsSelf();
             builder.RegisterType<CreateQuestionModel>().AsSelf();
+            builder.RegisterType<QuestionDetailsModel>().AsSelf();
 
             base.Load(builder);
         }

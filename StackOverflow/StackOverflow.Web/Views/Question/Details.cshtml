@@ -1,4 +1,6 @@
-﻿@{
+﻿@using StackOverflow.Platform.BusinessObjects
+@model QuestionDetailsModel
+@{
     ViewData["Title"] = "Details";
 }
 
@@ -19,4 +21,57 @@
         </div><!-- /.row -->
     </div><!-- /.container-fluid -->
 </div>
-<!-- /.content-header -->
+
+
+<div class="row">
+    <div class="col">
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-10">
+                        <a href="#">@Model.Title</a>
+                    </div>
+                    <div class="col-2">
+                        <a type="button" class="btn btn-primary d-grid gap-2 d-flex justify-content-md-end text-center"
+                           asp-area="" asp-controller="Question" asp-action="Create">Ask Question</a>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-1">
+                    </div>
+                    <div class="col-11">
+                        <p>
+                            @Html.Raw(@Model.Body)
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (@Model.Comments != null)
+{
+    foreach (var comment in @Model.Comments)
+    {
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-1">
+                            </div>
+                            <div class="col-11">
+                                <p>
+                                    @Html.Raw(@comment.Body)
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}

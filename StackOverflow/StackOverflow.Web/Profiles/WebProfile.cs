@@ -10,6 +10,7 @@ namespace StackOverflow.Web.Profiles
         public WebProfile()
         {
             CreateMap<CreateQuestionModel, BO.Question>().ReverseMap();
+            CreateMap<QuestionDetailsModel, BO.Question>().ReverseMap();
         }
     }
 }

@@ -12,5 +12,6 @@ namespace StackOverflow.Platform.Services
     {
         Task CreateQuestionAsync(BO.Question question);
         IList<BO.Question> GetQuestionListAsync();
+        BO.Question GetQuestionAsync(Guid id);
     }
 }

@@ -8,11 +8,11 @@
 <div class="content-header">
     <div class="container">
         <div class="row mb-2">
-            <div class="col-sm-8">
+            <div class="col-10">
                 <h1 class="m-0"> All Questions</h1>
             </div><!-- /.col -->
-            <div class="col-sm-4">
-                <a type="Button" asp-area="" asp-controller="Question" asp-action="Create">Ask Question</a>
+            <div class="col-2">
+                <a type="button" class="btn btn-primary d-grid gap-2 d-flex justify-content-md-end text-center" asp-area="" asp-controller="Question" asp-action="Create">Ask Question</a>
             </div><!-- /.col -->
         </div><!-- /.row -->
     </div><!-- /.container-fluid -->
@@ -24,13 +24,11 @@
         <div class="col">
             <div class="card">
                 <div class="card-body">
-                    <h2 class="card-title">@question.Title</h2>
-
+                    <a class="stretched-link" asp-area="" asp-controller="Question" asp-action="Details" asp-route-id="@question.Id">
+                        <h2 class="card-title">@question.Title</h2>
+                    </a>
                     <p class="card-text">
                         Asked : @question.CreateDate
-                    </p>
-                    <p class="card-text">
-                        Asked : @Html.Raw(@question.Body)
                     </p>
                 </div>
             </div>
