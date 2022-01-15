@@ -1,4 +1,5 @@
 ﻿@using StackOverflow.Platform.BusinessObjects
+@using Comment = StackOverflow.Platform.Entities.Comment
 @model QuestionDetailsModel
 @{
     ViewData["Title"] = "Details";
@@ -32,7 +33,7 @@
                         <a href="#">@Model.Title</a>
                     </div>
                     <div class="col-2">
-                        <a type="button" class="btn btn-primary d-grid gap-2 d-flex justify-content-md-end text-center"
+                        <a type="button" class="btn btn-primary d-grid gap-2 d-flex float-right"
                            asp-area="" asp-controller="Question" asp-action="Create">Ask Question</a>
                     </div>
                 </div>
@@ -45,6 +46,12 @@
                         <p>
                             @Html.Raw(@Model.Body)
                         </p>
+
+                        @if (@Model.Owner || @Model.Moderator)
+                        {
+                            <a class="accent-danger" asp-area="" asp-controller="Question" asp-action="Delete" asp-route-id="@Model.Id"><small>Delete</small></a>
+                        }
+
                     </div>
                 </div>
             </div>
@@ -62,11 +69,16 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-1">
+                                <div></div>
                             </div>
                             <div class="col-11">
                                 <p>
                                     @Html.Raw(@comment.Body)
                                 </p>
+                                @if (@Model.Moderator)
+                                {
+                                    <a class="accent-danger" asp-area="" asp-controller="Comment" asp-action="Delete" asp-route-id="@comment.Id"><small>Delete</small></a>
+                                }
                             </div>
                         </div>
                     </div>
@@ -74,4 +86,55 @@
             </div>
         </div>
     }
+}
+
+<div class="row">
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <form class="form" novalidate enctype="multipart/form-data" method="Post" asp-area="" asp-controller="Question"
+                      asp-action="AddComment" asp-antiforgery="true">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input asp-for="Id" type="hidden" />
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Comment</label>
+                            <div class="col-sm-10">
+                                <textarea type="text" name="comment" class="form-control" asp-for="Comment"
+                                          id="comment"></textarea>
+                            </div>
+                            <div>
+                                <span class="text-danger" asp-validation-for="Comment"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-info">Submit Answer</button>
+                        <button type="reset" class="btn btn-default float-right">Reset</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+
+<script>
+    $(document).ready(function() {
+        $('#comment').summernote({
+            placeholder: 'Include all the information someone would need to answer your question',
+            height: 200,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['view', ['fullscreen', 'codeview', 'help']]
+            ]
+        });
+    });
+</script>
 }

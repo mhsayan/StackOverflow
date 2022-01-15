@@ -37,10 +37,14 @@ namespace StackOverflow.Platform.Services
             return await _userManager.FindByIdAsync(userId.ToString());
         }
 
-        public async Task<ApplicationUser> GetUserAsync()
+        public async Task<ApplicationUser?> GetUserAsync()
         {
-            var user = await _userManager.FindByNameAsync(_httpContextAccessor.HttpContext.User.Identity.Name);
+            var userName = _httpContextAccessor.HttpContext?.User.Identity?.Name;
 
+            if (userName is null)
+                return null;
+
+            var user = await _userManager.FindByNameAsync(userName);
             return user;
         }
 

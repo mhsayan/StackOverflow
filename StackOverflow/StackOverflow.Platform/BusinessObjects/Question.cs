@@ -11,5 +11,6 @@ namespace StackOverflow.Platform.BusinessObjects
         public Guid ApplicationUserId { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
         public DateTime CreateDate { get; set; }
+        public IList<Comment> Comments { get; set; }
     }
 }

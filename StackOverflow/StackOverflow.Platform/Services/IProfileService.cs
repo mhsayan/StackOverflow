@@ -8,7 +8,7 @@ namespace StackOverflow.Platform.Services
         Task<ApplicationUser> GetUserAsync(string userName);
         Task<IList<string>> GetRolesAsync(ApplicationUser user);
         Task<ApplicationUser> GetUserAsync(Guid userId);
-        Task<ApplicationUser> GetUserAsync();
+        Task<ApplicationUser?> GetUserAsync();
         Task<ApplicationUser> GetUserByIdAsync(Guid userId);
     }
 }

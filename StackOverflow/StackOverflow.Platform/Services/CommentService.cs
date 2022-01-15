@@ -1,4 +1,5 @@
-﻿using System.Linq.Dynamic.Core;
+﻿using System.Globalization;
+using System.Linq.Dynamic.Core;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using StackOverflow.Platform.Exceptions;
@@ -8,13 +9,13 @@ using EO = StackOverflow.Platform.Entities;
 
 namespace StackOverflow.Platform.Services
 {
-    public class QuestionService : IQuestionService
+    public class CommentService : ICommentService
     {
         private readonly IPlatformUnitOfWork _unitOfWork;
         private readonly IProfileService _profileService;
         private IMapper _mapper;
 
-        public QuestionService(IPlatformUnitOfWork unitOfWork,
+        public CommentService(IPlatformUnitOfWork unitOfWork,
             IMapper mapper,
             IProfileService profileService)
         {
@@ -23,18 +24,13 @@ namespace StackOverflow.Platform.Services
             _profileService = profileService;
         }
 
-        public async Task CreateQuestionAsync(BO.Question question)
+        public void CreateCommentAsync(string commentBody, Guid questionId)
         {
-            if (question == null)
-                throw new InvalidParameterException("Received null business object.");
-            var user = await _profileService.GetUserAsync();
+            var comment = new EO.Comment();
+            comment.Body = commentBody;
+            comment.QuestionId = questionId;
 
-            question.ApplicationUserId = user.Id;
-            question.CreateDate = DateTime.Now;
-
-            var questionEntity = _mapper.Map<EO.Question>(question);
-
-            _unitOfWork.Questions.Add(questionEntity);
+            _unitOfWork.Comments.Add(comment);
             _unitOfWork.Save();
         }
 
@@ -62,7 +58,7 @@ namespace StackOverflow.Platform.Services
 
         public void Delete(Guid id)
         {
-            _unitOfWork.Questions.Remove(id);
+            _unitOfWork.Comments.Remove(id);
             _unitOfWork.Save();
         }
     }

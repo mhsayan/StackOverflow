@@ -8,9 +8,9 @@ using EO = StackOverflow.Platform.Entities;
 
 namespace StackOverflow.Platform.Services
 {
-    public interface IQuestionService
+    public interface ICommentService
     {
-        Task CreateQuestionAsync(BO.Question question);
+        void CreateCommentAsync(string commentBody, Guid questionId);
         IList<BO.Question> GetQuestionListAsync();
         BO.Question GetQuestionAsync(Guid id);
         void Delete(Guid id);

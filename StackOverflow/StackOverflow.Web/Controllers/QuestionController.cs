@@ -19,11 +19,13 @@ namespace StackOverflow.Web.Controllers
         }
 
         [AllowAnonymous]
-        public IActionResult Details(Guid id)
+        public async Task<IActionResult> Details(Guid id)
         {
             var model = _scope.Resolve<QuestionDetailsModel>();
             model.Resolve(_scope);
-            ViewBag.Question = model.GetQuestionDetailsAsync(id);
+            model.GetQuestionDetailsAsync(id);
+            await model.GetOwnerStatusAsync();
+            await model.GetModeratorStatusAsync();
 
             return View(model);
         }
@@ -57,14 +59,40 @@ namespace StackOverflow.Web.Controllers
             }
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public RedirectToActionResult AddComment(QuestionDetailsModel model)
+        {
+            try
+            {
+                model.Resolve(_scope);
+                model.AddComment();
+
+                return RedirectToAction(nameof(Details), "Question", new { id = model.Id });
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", ex.Message);
+                _logger.LogError(ex, "Failed to add a new comment.");
+
+                return RedirectToAction(nameof(Details), "Question", new { id = model.Id });
+            }
+        }
+
         public IActionResult Edit()
         {
             return View();
         }
 
-        //public IActionResult Delete()
-        //{
-        //    //return RedirectToAction(nameof(Index));
-        //}
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(Guid Id)
+        {
+            var model = _scope.Resolve<QuestionDetailsModel>();
+            model.Resolve(_scope);
+            model.Delete(Id);
+
+            return RedirectToAction(nameof(Index), "Home");
+        }
     }
 }
