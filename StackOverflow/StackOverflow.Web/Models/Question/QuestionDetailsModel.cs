@@ -23,6 +23,7 @@ namespace StackOverflow.Web.Models.Question
         private ILifetimeScope _scope;
         private IQuestionService _questionService;
         private ICommentService _commentService;
+        private IVoteService _voteService;
         private IProfileService _profileService { get; set; }
         private IMapper _mapper;
 
@@ -38,23 +39,28 @@ namespace StackOverflow.Web.Models.Question
             _mapper = _scope.Resolve<IMapper>();
             _commentService = _scope.Resolve<ICommentService>();
             _profileService = _scope.Resolve<IProfileService>();
+            _voteService = _scope.Resolve<IVoteService>();
         }
 
         public QuestionDetailsModel(IQuestionService questionService, IMapper mapper,
-            ICommentService commentService,
-            IProfileService profileService)
+            ICommentService commentService, IProfileService profileService,
+            IVoteService voteService)
         {
             _questionService = questionService;
             _mapper = mapper;
             _commentService = commentService;
             _profileService = profileService;
+            _voteService = voteService;
         }
 
         public void GetQuestionDetailsAsync(Guid id)
         {
             var question = _questionService.GetQuestionAsync(id);
 
-            //Comments = new List<BO.Comment>();
+            foreach (var comment in question.Comments)
+            {
+                comment.TotalVote = _voteService.VoteCount(comment.Id);
+            }
 
             _mapper.Map(question, this);
         }

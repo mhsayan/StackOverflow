@@ -13,53 +13,66 @@ namespace StackOverflow.Platform.Services
     {
         private readonly IPlatformUnitOfWork _unitOfWork;
         private readonly IProfileService _profileService;
+        private readonly ICommentService _commentService;
         private IMapper _mapper;
 
         public VoteService(IPlatformUnitOfWork unitOfWork,
-            IMapper mapper,
-            IProfileService profileService)
+            IMapper mapper, IProfileService profileService,
+            ICommentService commentService)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _profileService = profileService;
+            _commentService = commentService;
         }
 
-        public void CreateCommentAsync(string commentBody, Guid questionId)
+        public async Task<BO.Vote?> GetUserVote(Guid commentId)
         {
-            var comment = new EO.Comment();
-            comment.Body = commentBody;
-            comment.QuestionId = questionId;
-
-            _unitOfWork.Comments.Add(comment);
-            _unitOfWork.Save();
-        }
-
-        public void Delete(Guid id)
-        {
-            _unitOfWork.Comments.Remove(id);
-            _unitOfWork.Save();
-        }
-
-        public BO.Comment GetComment(Guid id)
-        {
-            if (id == Guid.Empty)
+            if (commentId == Guid.Empty)
                 throw new InvalidParameterException("Comment id is required.");
 
-            var commentEntity = _unitOfWork.Comments.Get(q => q.Id == id, "").FirstOrDefault();
-            var comment = _mapper.Map<BO.Comment>(commentEntity);
+            var user = await _profileService.GetUserAsync();
 
-            return comment;
+            if (user == null)
+            {
+                return null;
+            }
+
+            var voteEntity = _unitOfWork.Votes.Get(c => c.CommentId == commentId && c.ApplicationUserId == user.Id, "").FirstOrDefault();
+
+            var vote = _mapper.Map<BO.Vote>(voteEntity);
+
+            return vote;
         }
 
-        public void AcceptAnswer(Guid id)
+        public void CreateVote(BO.Vote vote)
         {
-            if (id == Guid.Empty)
-                throw new InvalidParameterException("Comment id is required.");
+            if (vote == null)
+                throw new InvalidOperationException("New vote creation failed.");
 
-            var comment = _unitOfWork.Comments.GetById(id);
-            comment.IsAnswer = true;
+            var voteEntity = _mapper.Map<EO.Vote>(vote);
+
+            _unitOfWork.Votes.Add(voteEntity);
+            _unitOfWork.Save();
+        }
+
+        public void UpdateVote(BO.Vote vote)
+        {
+            if (vote == null)
+                throw new InvalidOperationException("Vote update failed.");
+
+            var voteEntity = _unitOfWork.Votes.GetById(vote.Id);
+            _mapper.Map(vote, voteEntity);
 
             _unitOfWork.Save();
+        }
+
+        public int VoteCount(Guid commentId)
+        {
+            var upVotes = _unitOfWork.Votes.GetCount(v => v.UpVote == true && v.CommentId == commentId);
+            var downVotes = _unitOfWork.Votes.GetCount(v => v.DownVote == true && v.CommentId == commentId);
+
+            return upVotes - downVotes;
         }
     }
 }

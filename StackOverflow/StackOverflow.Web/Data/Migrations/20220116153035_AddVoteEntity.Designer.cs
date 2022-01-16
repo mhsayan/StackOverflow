@@ -12,7 +12,7 @@ using StackOverflow.Platform.Contexts;
 namespace StackOverflow.Web.Data.Migrations
 {
     [DbContext(typeof(PlatformDbContext))]
-    [Migration("20220116145927_AddVoteEntity")]
+    [Migration("20220116153035_AddVoteEntity")]
     partial class AddVoteEntity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

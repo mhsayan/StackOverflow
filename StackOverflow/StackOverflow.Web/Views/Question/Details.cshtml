@@ -73,15 +73,21 @@
                             <div class="col-1">
                                 <div>
                                     <div class="row justify-content-center">
-                                        <i class="fas fa-caret-up fa-2x"></i>
+                                        <form asp-controller="Comment" asp-action="UpVote" asp-route-id="@comment.Id" data-ajax="true">
+                                            <button type="submit">
+                                                <i class="fas fa-caret-up fa-2x"></i>
+                                            </button>
+                                        </form>
                                     </div>
                                     <div class="row justify-content-center">
-                                        <h5>10</h5>
+                                        <h5>@comment.TotalVote</h5>
                                     </div>
                                     <div class="row justify-content-center">
-                                        <a href="#">
-                                            <i class="fas fa-caret-down fa-2x"></i>
-                                        </a>
+                                        <form asp-controller="Comment" asp-action="DownVote" asp-route-id="@comment.Id" data-ajax="true">
+                                            <button type="submit">
+                                                <i class="fas fa-caret-down fa-2x"></i>
+                                            </button>
+                                        </form>
                                     </div>
 
                                     @if (!@comment.IsAnswer && @Model.Owner)

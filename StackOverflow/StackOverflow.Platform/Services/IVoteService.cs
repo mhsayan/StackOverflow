@@ -10,9 +10,9 @@ namespace StackOverflow.Platform.Services
 {
     public interface IVoteService
     {
-        void CreateCommentAsync(string commentBody, Guid questionId);
-        void Delete(Guid id);
-        BO.Comment GetComment(Guid id);
-        void AcceptAnswer(Guid id);
+        Task<BO.Vote?> GetUserVote(Guid commentId);
+        void CreateVote(BO.Vote vote);
+        void UpdateVote(BO.Vote vote);
+        int VoteCount(Guid commentId);
     }
 }
