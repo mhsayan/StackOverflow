@@ -28,7 +28,7 @@
             <div class="card-header">
                 <div class="row">
                     <div class="col-10">
-                        <a href="#">@Model.Title</a>
+                        <a href="#"><h2>@Model.Title</h2></a>
                     </div>
                     <div class="col-2">
                         <a type="button" class="btn btn-primary d-grid gap-2 d-flex float-right"
@@ -53,7 +53,6 @@
                                 </button>
                             </form>
                         }
-
                     </div>
                 </div>
             </div>
@@ -73,21 +72,39 @@
                             <div class="col-1">
                                 <div>
                                     <div class="row justify-content-center">
-                                        <form asp-controller="Comment" asp-action="UpVote" asp-route-id="@comment.Id" data-ajax="true">
-                                            <button type="submit">
+                                        @if (@Model.IsAuthenticated)
+                                        {
+                                            <form asp-controller="Comment" asp-action="UpVote" asp-route-id="@comment.Id" data-ajax="true">
+                                                <button type="submit">
+                                                    <i class="fas fa-caret-up fa-2x"></i>
+                                                </button>
+                                            </form>
+                                        }
+                                        else
+                                        {
+                                            <button href="#" data-toggle="popover" data-content="You need to login first!">
                                                 <i class="fas fa-caret-up fa-2x"></i>
                                             </button>
-                                        </form>
+                                        }
                                     </div>
                                     <div class="row justify-content-center">
                                         <h5>@comment.TotalVote</h5>
                                     </div>
                                     <div class="row justify-content-center">
-                                        <form asp-controller="Comment" asp-action="DownVote" asp-route-id="@comment.Id" data-ajax="true">
-                                            <button type="submit">
+                                        @if (@Model.IsAuthenticated)
+                                        {
+                                            <form asp-controller="Comment" asp-action="DownVote" asp-route-id="@comment.Id" data-ajax="true">
+                                                <button type="submit">
+                                                    <i class="fas fa-caret-down fa-2x"></i>
+                                                </button>
+                                            </form>
+                                        }
+                                        else
+                                        {
+                                            <button href="#" data-toggle="popover" data-content="You need to login first!">
                                                 <i class="fas fa-caret-down fa-2x"></i>
                                             </button>
-                                        </form>
+                                        }
                                     </div>
 
                                     @if (!@comment.IsAnswer && @Model.Owner)
@@ -140,7 +157,7 @@
                     <input asp-for="Id" type="hidden" />
                     <div class="card-body">
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Comment</label>
+                            <label class="col-sm-2 col-form-label">Post Answer</label>
                             <div class="col-sm-10">
                                 <textarea type="text" name="comment" class="form-control" asp-for="Comment"
                                           id="comment"></textarea>
@@ -151,8 +168,14 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-info">Submit Answer</button>
-                        <button type="reset" class="btn btn-default float-right">Reset</button>
+                        @if (@Model.IsAuthenticated)
+                        {
+                            <button type="submit" class="btn btn-info">Post Your Answer</button>
+                        }
+                        else
+                        {
+                            <a data-toggle="popover" data-content="You need to login first!" data-placement="top" class="btn btn-info">Post Your Answer</a>
+                        }
                     </div>
                 </form>
             </div>
@@ -167,7 +190,7 @@
 <script>
     $(document).ready(function() {
         $('#comment').summernote({
-            placeholder: 'Include all the information someone would need to answer your question',
+            placeholder: '',
             height: 200,
             toolbar: [
                 ['style', ['style']],
@@ -178,6 +201,10 @@
                 ['view', ['fullscreen', 'codeview', 'help']]
             ]
         });
+    });
+
+    $(document).ready(function(){
+        $('[data-toggle="popover"]').popover();
     });
 
 </script>

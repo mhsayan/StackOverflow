@@ -26,6 +26,7 @@ namespace StackOverflow.Web.Controllers
             model.GetQuestionDetailsAsync(id);
             await model.GetOwnerStatusAsync();
             await model.GetModeratorStatusAsync();
+            model.LoadUserAuthentication();
 
             return View(model);
         }

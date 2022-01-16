@@ -68,5 +68,10 @@ namespace StackOverflow.Platform.Services
 
             return await _userManager.FindByIdAsync(userId.ToString());
         }
+
+        public bool IsAuthenticated()
+        {
+            return _httpContextAccessor.HttpContext.User.Identity.IsAuthenticated;
+        }
     }
 }

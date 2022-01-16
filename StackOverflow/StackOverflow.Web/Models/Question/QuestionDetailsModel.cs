@@ -14,11 +14,12 @@ namespace StackOverflow.Web.Models.Question
         public string Body { get; set; }
         public DateTime CreateDate { get; set; }
         public Guid ApplicationUserId { get; set; }
-        [Required]
-        [StringLength(1000, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 10)]
         public IList<BO.Comment> Comments { get; set; }
         public bool Owner { get; set; }
         public bool Moderator { get; set; }
+        public bool IsAuthenticated { get; set; }
+        [Required]
+        [StringLength(1000, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 10)]
         public string Comment { get; set; }
         private ILifetimeScope _scope;
         private IQuestionService _questionService;
@@ -97,6 +98,11 @@ namespace StackOverflow.Web.Models.Question
         public void Delete(Guid id)
         {
             _questionService.Delete(id);
+        }
+
+        public void LoadUserAuthentication()
+        {
+            IsAuthenticated = _profileService.IsAuthenticated();
         }
     }
 }

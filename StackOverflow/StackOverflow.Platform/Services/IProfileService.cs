@@ -10,5 +10,6 @@ namespace StackOverflow.Platform.Services
         Task<ApplicationUser> GetUserAsync(Guid userId);
         Task<ApplicationUser?> GetUserAsync();
         Task<ApplicationUser> GetUserByIdAsync(Guid userId);
+        bool IsAuthenticated();
     }
 }
