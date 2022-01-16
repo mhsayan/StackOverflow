@@ -39,13 +39,14 @@ namespace StackOverflow.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete(Guid commentId)
+        public IActionResult Delete(Guid id)
         {
             var model = _scope.Resolve<CommentModel>();
             model.Resolve(_scope);
-            model.Delete(commentId);
+            model.GetComment(id);
+            model.Delete(id);
 
-            return RedirectToAction(nameof(Index), "Home");
+            return RedirectToAction("Details", "Question", new { id = model.QuestionId });
         }
     }
 }

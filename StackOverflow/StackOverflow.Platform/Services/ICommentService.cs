@@ -14,5 +14,6 @@ namespace StackOverflow.Platform.Services
         IList<BO.Question> GetQuestionListAsync();
         BO.Question GetQuestionAsync(Guid id);
         void Delete(Guid id);
+        BO.Comment GetComment(Guid id);
     }
 }

@@ -63,6 +63,11 @@ namespace StackOverflow.Web.Controllers
         [ValidateAntiForgeryToken]
         public RedirectToActionResult AddComment(QuestionDetailsModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                RedirectToAction(nameof(Index), "Home");
+            }
+
             try
             {
                 model.Resolve(_scope);
@@ -86,11 +91,11 @@ namespace StackOverflow.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete(Guid Id)
+        public IActionResult Delete(Guid id)
         {
             var model = _scope.Resolve<QuestionDetailsModel>();
             model.Resolve(_scope);
-            model.Delete(Id);
+            model.Delete(id);
 
             return RedirectToAction(nameof(Index), "Home");
         }

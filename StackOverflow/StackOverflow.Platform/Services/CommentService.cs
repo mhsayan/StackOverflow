@@ -61,5 +61,16 @@ namespace StackOverflow.Platform.Services
             _unitOfWork.Comments.Remove(id);
             _unitOfWork.Save();
         }
+
+        public BO.Comment GetComment(Guid id)
+        {
+            if (id == Guid.Empty)
+                throw new InvalidParameterException("Comment id is required.");
+
+            var commentEntity = _unitOfWork.Comments.Get(q => q.Id == id, "").FirstOrDefault();
+            var comment = _mapper.Map<BO.Comment>(commentEntity);
+
+            return comment;
+        }
     }
 }

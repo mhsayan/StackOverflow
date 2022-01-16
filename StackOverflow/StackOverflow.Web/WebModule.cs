@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using StackOverflow.Web.Models;
+using StackOverflow.Web.Models.Comment;
 using StackOverflow.Web.Models.Question;
 
 namespace StackOverflow.Web
@@ -11,6 +12,7 @@ namespace StackOverflow.Web
             builder.RegisterType<IndexModel>().AsSelf();
             builder.RegisterType<CreateQuestionModel>().AsSelf();
             builder.RegisterType<QuestionDetailsModel>().AsSelf();
+            builder.RegisterType<CommentModel>().AsSelf();
 
             base.Load(builder);
         }

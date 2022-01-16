@@ -18,6 +18,7 @@ namespace StackOverflow.Web.Models.Comment
         public int UpVote { get; set; }
         public int DownVote { get; set; }
         private ICommentService _commentService;
+        private IQuestionService _questionService;
         private ILifetimeScope _scope;
         private IMapper _mapper;
 
@@ -26,10 +27,12 @@ namespace StackOverflow.Web.Models.Comment
 
         }
 
-        public CommentModel(IMapper mapper, ICommentService commentService)
+        public CommentModel(IMapper mapper, ICommentService commentService,
+            IQuestionService questionService)
         {
             _mapper = mapper;
             _commentService = commentService;
+            _questionService = questionService;
         }
 
         public void Resolve(ILifetimeScope scope)
@@ -37,11 +40,18 @@ namespace StackOverflow.Web.Models.Comment
             _scope = scope;
             _mapper = _scope.Resolve<IMapper>();
             _commentService = _scope.Resolve<ICommentService>();
+            _questionService = _scope.Resolve<IQuestionService>();
         }
 
         public void Delete(Guid id)
         {
             _commentService.Delete(id);
+        }
+
+        public void GetComment(Guid id)
+        {
+            var comment = _commentService.GetComment(id);
+            _mapper.Map(comment, this);
         }
     }
 }

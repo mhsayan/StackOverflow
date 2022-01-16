@@ -1,6 +1,4 @@
-﻿@using StackOverflow.Platform.BusinessObjects
-@using Comment = StackOverflow.Platform.Entities.Comment
-@model QuestionDetailsModel
+﻿@model QuestionDetailsModel
 @{
     ViewData["Title"] = "Details";
 }
@@ -49,7 +47,11 @@
 
                         @if (@Model.Owner || @Model.Moderator)
                         {
-                            <a class="accent-danger" asp-area="" asp-controller="Question" asp-action="Delete" asp-route-id="@Model.Id"><small>Delete</small></a>
+                            <form asp-controller="Question" asp-action="Delete" asp-route-id="@Model.Id" data-ajax="true">
+                                <button type="submit" class="btn btn-sm btn-danger d-none d-md-inline-block">
+                                    Delete
+                                </button>
+                            </form>
                         }
 
                     </div>
@@ -77,7 +79,11 @@
                                 </p>
                                 @if (@Model.Moderator)
                                 {
-                                    <a class="accent-danger" asp-area="" asp-controller="Comment" asp-action="Delete" asp-route-id="@comment.Id"><small>Delete</small></a>
+                                    <form asp-controller="Comment" asp-action="Delete" asp-route-id="@comment.Id" data-ajax="true">
+                                        <button type="submit" class="btn btn-sm btn-danger d-none d-md-inline-block">
+                                            Delete
+                                        </button>
+                                    </form>
                                 }
                             </div>
                         </div>
@@ -118,6 +124,7 @@
     </div>
 </div>
 
+
 @section Scripts {
 <partial name="_ValidationScriptsPartial" />
 
@@ -136,5 +143,6 @@
             ]
         });
     });
+
 </script>
 }
