@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Autofac;
 using AutoMapper;
+using StackOverflow.Platform.Exceptions;
 using StackOverflow.Platform.Services;
 using BO = StackOverflow.Platform.BusinessObjects;
 
@@ -52,6 +53,14 @@ namespace StackOverflow.Web.Models.Comment
         {
             var comment = _commentService.GetComment(id);
             _mapper.Map(comment, this);
+        }
+
+        public void AcceptAnswer(Guid id)
+        {
+            if (id == Guid.Empty)
+                throw new InvalidParameterException("Comment id is required.");
+
+            _commentService.AcceptAnswer(id);
         }
     }
 }

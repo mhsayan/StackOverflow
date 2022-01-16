@@ -71,7 +71,37 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-1">
-                                <div></div>
+                                <div>
+                                    <div class="row justify-content-center">
+                                        <i class="fas fa-caret-up fa-2x"></i>
+                                    </div>
+                                    <div class="row justify-content-center">
+                                        <h5>10</h5>
+                                    </div>
+                                    <div class="row justify-content-center">
+                                        <a href="#">
+                                            <i class="fas fa-caret-down fa-2x"></i>
+                                        </a>
+                                    </div>
+
+                                    @if (!@comment.IsAnswer && @Model.Owner)
+                                    {
+                                        <div class="row justify-content-center">
+                                            <form asp-controller="Comment" asp-action="Accept" asp-route-id="@comment.Id" data-ajax="true">
+                                                <button type="submit">
+                                                    <i class="fas fa-check fa-2x"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    }
+
+                                    @if (@comment.IsAnswer)
+                                    {
+                                        <div class="row justify-content-center">
+                                            <i class="fas fa-check fa-2x" style="color: green"></i>
+                                        </div>
+                                    }
+                                </div>
                             </div>
                             <div class="col-11">
                                 <p>

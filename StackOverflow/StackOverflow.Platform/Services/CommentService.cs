@@ -72,5 +72,16 @@ namespace StackOverflow.Platform.Services
 
             return comment;
         }
+
+        public void AcceptAnswer(Guid id)
+        {
+            if (id == Guid.Empty)
+                throw new InvalidParameterException("Comment id is required.");
+
+            var comment = _unitOfWork.Comments.GetById(id);
+            comment.IsAnswer = true;
+
+            _unitOfWork.Save();
+        }
     }
 }

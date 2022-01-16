@@ -48,5 +48,17 @@ namespace StackOverflow.Web.Controllers
 
             return RedirectToAction("Details", "Question", new { id = model.QuestionId });
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Accept(Guid id)
+        {
+            var model = _scope.Resolve<CommentModel>();
+            model.Resolve(_scope);
+            model.GetComment(id);
+            model.AcceptAnswer(id);
+
+            return RedirectToAction("Details", "Question", new { id = model.QuestionId });
+        }
     }
 }
