@@ -8,7 +8,7 @@ using EO = StackOverflow.Platform.Entities;
 
 namespace StackOverflow.Platform.Services
 {
-    public interface ICommentService
+    public interface IVoteService
     {
         void CreateCommentAsync(string commentBody, Guid questionId);
         void Delete(Guid id);

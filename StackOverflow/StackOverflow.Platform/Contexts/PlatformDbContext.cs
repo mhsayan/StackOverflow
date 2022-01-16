@@ -40,10 +40,17 @@ namespace StackOverflow.Platform.Contexts
                 .HasForeignKey(c => c.QuestionId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            modelBuilder.Entity<Comment>()
+                .HasMany(c => c.Votes)
+                .WithOne(c => c.Comment)
+                .HasForeignKey(v => v.CommentId)
+                .OnDelete(DeleteBehavior.Cascade);
+
             base.OnModelCreating(modelBuilder);
         }
 
         public DbSet<Question> Questions { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<Vote> Votes { get; set; }
     }
 }

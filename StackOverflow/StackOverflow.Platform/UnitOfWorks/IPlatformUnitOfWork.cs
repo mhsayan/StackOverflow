@@ -7,5 +7,6 @@ namespace StackOverflow.Platform.UnitOfWorks
     {
         IQuestionRepository Questions { get; }
         ICommentRepository Comments { get; }
+        IVoteRepository Votes { get; }
     }
 }

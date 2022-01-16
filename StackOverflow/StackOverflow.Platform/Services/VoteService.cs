@@ -9,13 +9,13 @@ using EO = StackOverflow.Platform.Entities;
 
 namespace StackOverflow.Platform.Services
 {
-    public class CommentService : ICommentService
+    public class VoteService : IVoteService
     {
         private readonly IPlatformUnitOfWork _unitOfWork;
         private readonly IProfileService _profileService;
         private IMapper _mapper;
 
-        public CommentService(IPlatformUnitOfWork unitOfWork,
+        public VoteService(IPlatformUnitOfWork unitOfWork,
             IMapper mapper,
             IProfileService profileService)
         {

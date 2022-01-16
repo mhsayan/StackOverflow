@@ -9,7 +9,6 @@ namespace StackOverflow.Platform.BusinessObjects
         public Entities.Question Question { get; set; }
         public string Body { get; set; }
         public bool IsAnswer { get; set; }
-        public int Upvote { get; set; }
-        public int DownVote { get; set; }
+        public IList<Vote> Votes { get; set; }
     }
 }

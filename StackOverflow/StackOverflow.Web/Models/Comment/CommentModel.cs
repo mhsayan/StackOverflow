@@ -16,10 +16,7 @@ namespace StackOverflow.Web.Models.Comment
         [StringLength(1000, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 10)]
         public string Body { get; set; }
         public bool IsAnswer { get; set; }
-        public int UpVote { get; set; }
-        public int DownVote { get; set; }
         private ICommentService _commentService;
-        private IQuestionService _questionService;
         private ILifetimeScope _scope;
         private IMapper _mapper;
 
@@ -28,12 +25,10 @@ namespace StackOverflow.Web.Models.Comment
 
         }
 
-        public CommentModel(IMapper mapper, ICommentService commentService,
-            IQuestionService questionService)
+        public CommentModel(IMapper mapper, ICommentService commentService)
         {
             _mapper = mapper;
             _commentService = commentService;
-            _questionService = questionService;
         }
 
         public void Resolve(ILifetimeScope scope)
@@ -41,7 +36,6 @@ namespace StackOverflow.Web.Models.Comment
             _scope = scope;
             _mapper = _scope.Resolve<IMapper>();
             _commentService = _scope.Resolve<ICommentService>();
-            _questionService = _scope.Resolve<IQuestionService>();
         }
 
         public void Delete(Guid id)

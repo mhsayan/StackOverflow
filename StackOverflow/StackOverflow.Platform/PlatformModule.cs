@@ -35,10 +35,14 @@ namespace StackOverflow.Platform
                 .InstancePerLifetimeScope();
             builder.RegisterType<CommentService>().As<ICommentService>()
                 .InstancePerLifetimeScope();
+            builder.RegisterType<VoteService>().As<IVoteService>()
+                .InstancePerLifetimeScope();
 
             builder.RegisterType<QuestionRepository>().As<IQuestionRepository>()
                 .InstancePerLifetimeScope();
             builder.RegisterType<CommentRepository>().As<ICommentRepository>()
+                .InstancePerLifetimeScope();
+            builder.RegisterType<VoteRepository>().As<IVoteRepository>()
                 .InstancePerLifetimeScope();
 
             builder.RegisterType<PlatformUnitOfWork>().As<IPlatformUnitOfWork>()

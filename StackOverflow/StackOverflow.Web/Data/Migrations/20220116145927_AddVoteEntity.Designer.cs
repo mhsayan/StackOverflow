@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StackOverflow.Platform.Contexts;
 
@@ -11,9 +12,10 @@ using StackOverflow.Platform.Contexts;
 namespace StackOverflow.Web.Data.Migrations
 {
     [DbContext(typeof(PlatformDbContext))]
-    partial class PlatformDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220116145927_AddVoteEntity")]
+    partial class AddVoteEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
