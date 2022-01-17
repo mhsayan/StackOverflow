@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Autofac;
 using AutoMapper;
+using StackOverflow.Platform.Exceptions;
 using StackOverflow.Platform.Services;
 using BO = StackOverflow.Platform.BusinessObjects;
 
@@ -54,9 +55,12 @@ namespace StackOverflow.Web.Models.Question
             _voteService = voteService;
         }
 
-        public void GetQuestionDetailsAsync(Guid id)
+        public void GetQuestionDetailsAsync(Guid questionId)
         {
-            var question = _questionService.GetQuestion(id);
+            if (questionId == Guid.Empty)
+                throw new InvalidParameterException("Question id is needed to get question details.");
+
+            var question = _questionService.GetQuestion(questionId);
 
             foreach (var comment in question.Comments)
             {
@@ -95,9 +99,12 @@ namespace StackOverflow.Web.Models.Question
             }
         }
 
-        public void Delete(Guid id)
+        public void Delete(Guid questionId)
         {
-            _questionService.Delete(id);
+            if (questionId == Guid.Empty)
+                throw new InvalidParameterException("Question id is needed to delete the question.");
+
+            _questionService.Delete(questionId);
         }
 
         public void LoadUserAuthentication()

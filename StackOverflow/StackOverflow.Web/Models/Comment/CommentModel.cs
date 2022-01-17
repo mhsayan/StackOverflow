@@ -11,11 +11,6 @@ namespace StackOverflow.Web.Models.Comment
     {
         [Required]
         public Guid QuestionId { get; set; }
-        public BO.Question Question { get; set; }
-        [Required]
-        [StringLength(10000, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 10)]
-        public string Body { get; set; }
-        public bool IsAnswer { get; set; }
         private ICommentService _commentService;
         private ILifetimeScope _scope;
         private IMapper _mapper;
@@ -40,11 +35,17 @@ namespace StackOverflow.Web.Models.Comment
 
         public void Delete(Guid id)
         {
+            if (id == Guid.Empty)
+                throw new InvalidParameterException("Comment id is required to delete the comment.");
+
             _commentService.Delete(id);
         }
 
         public void GetComment(Guid id)
         {
+            if (id == Guid.Empty)
+                throw new InvalidParameterException("Comment id is required to get comment.");
+
             var comment = _commentService.GetComment(id);
             _mapper.Map(comment, this);
         }
@@ -52,7 +53,7 @@ namespace StackOverflow.Web.Models.Comment
         public void AcceptAnswer(Guid id)
         {
             if (id == Guid.Empty)
-                throw new InvalidParameterException("Comment id is required.");
+                throw new InvalidParameterException("Comment id is required to accept the answer.");
 
             _commentService.AcceptAnswer(id);
         }

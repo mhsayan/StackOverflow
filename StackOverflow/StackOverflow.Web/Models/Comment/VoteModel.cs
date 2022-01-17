@@ -50,7 +50,7 @@ namespace StackOverflow.Web.Models.Comment
         public async Task UpVote(Guid id)
         {
             if (id == Guid.Empty)
-                throw new InvalidParameterException("Comment id is required.");
+                throw new InvalidParameterException("Comment id is required to up vote.");
 
             var userVote = await _voteService.GetUserVote(id);
 
@@ -81,7 +81,7 @@ namespace StackOverflow.Web.Models.Comment
         public async Task DownVote(Guid id)
         {
             if (id == Guid.Empty)
-                throw new InvalidParameterException("Comment id is required.");
+                throw new InvalidParameterException("Comment id is required to down vote.");
 
             var userVote = await _voteService.GetUserVote(id);
 
