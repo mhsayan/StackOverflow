@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BO = StackOverflow.Platform.BusinessObjects;
-using EO = StackOverflow.Platform.Entities;
+﻿using BO = StackOverflow.Platform.BusinessObjects;
 
 namespace StackOverflow.Platform.Services
 {

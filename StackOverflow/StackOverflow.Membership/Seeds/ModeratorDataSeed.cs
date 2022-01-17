@@ -1,5 +1,4 @@
-﻿using System.Security.Claims;
-using Autofac;
+﻿using Autofac;
 using Microsoft.AspNetCore.Identity;
 using StackOverflow.Membership.Entities;
 

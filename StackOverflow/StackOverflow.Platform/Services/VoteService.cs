@@ -1,7 +1,4 @@
-﻿using System.Globalization;
-using System.Linq.Dynamic.Core;
-using AutoMapper;
-using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
 using StackOverflow.Platform.Exceptions;
 using StackOverflow.Platform.UnitOfWorks;
 using BO = StackOverflow.Platform.BusinessObjects;

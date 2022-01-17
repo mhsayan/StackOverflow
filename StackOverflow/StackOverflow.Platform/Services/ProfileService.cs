@@ -1,5 +1,4 @@
-﻿using System.Security.Claims;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using StackOverflow.Membership.Entities;
 using StackOverflow.Platform.Exceptions;
@@ -9,15 +8,12 @@ namespace StackOverflow.Platform.Services
     public class ProfileService : IProfileService
     {
         private UserManager<ApplicationUser> _userManager;
-        private SignInManager<ApplicationUser> _signInManager;
         private static IHttpContextAccessor _httpContextAccessor;
 
         public ProfileService(UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager,
             IHttpContextAccessor httpContextAccessor)
         {
             _userManager = userManager;
-            _signInManager = signInManager;
             _httpContextAccessor = httpContextAccessor;
         }
 
