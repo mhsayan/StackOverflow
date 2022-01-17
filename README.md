@@ -1,8 +1,4 @@
-# StackOverflow
-
----
-
-### **Stack Overflow  (Question Answer Platform)**
+# **Stack Overflow  (Question Answer Platform)**
 
 ## <u>Features</u>
 
@@ -21,8 +17,6 @@
 7. Moderator can delete the Question and Answer
 
 **Technology: ASP.NET Core 6.0 | EntityFramework Core 6.0 | MSSQL Server**
-
-
 
 **Project Configuration**:
 
