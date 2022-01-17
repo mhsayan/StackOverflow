@@ -1,6 +1,6 @@
 ﻿@model QuestionDetailsModel
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Question Details";
 }
 
 <!-- Content Header (Page header) -->
@@ -8,13 +8,12 @@
     <div class="container">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0"> Top Navigation <small>Example 3.0</small></h1>
+                <h1 class="m-0">Question Details</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item"><a href="#">Layout</a></li>
-                    <li class="breadcrumb-item active">Top Navigation</li>
+                    <li class="breadcrumb-item"><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li class="breadcrumb-item active">Details</li>
                 </ol>
             </div><!-- /.col -->
         </div><!-- /.row -->
@@ -47,13 +46,19 @@
 
                         @if (@Model.Owner || @Model.Moderator)
                         {
-                            <form asp-controller="Question" asp-action="Delete" asp-route-id="@Model.Id" data-ajax="true">
-                                <button type="submit" class="btn btn-sm btn-danger d-none d-md-inline-block">
-                                    Delete
-                                </button>
-                            </form>
-                            <a class="btn btn-primary d-grid gap-2 d-flex float-right"
-                           asp-controller="Question" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+                            <div class="row">
+                                <div class="col-1">
+                                    <form asp-controller="Question" asp-action="Delete" asp-route-id="@Model.Id" data-ajax="true" asp-antiforgery="true">
+                                        <button type="submit" class="btn btn-sm btn-danger d-none d-md-inline-block">
+                                            Delete
+                                        </button>
+                                    </form>
+                                </div>
+                                <div class="col-1">
+                                    <a class="btn btn-sm btn-primary d-none d-md-inline-block"
+                                   asp-controller="Question" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+                                </div>
+                            </div>
                         }
                     </div>
                 </div>
@@ -76,7 +81,7 @@
                                     <div class="row justify-content-center">
                                         @if (@Model.IsAuthenticated)
                                         {
-                                            <form asp-controller="Comment" asp-action="UpVote" asp-route-id="@comment.Id" data-ajax="true">
+                                            <form asp-controller="Comment" asp-action="UpVote" asp-route-id="@comment.Id" data-ajax="true" asp-antiforgery="true">
                                                 <button type="submit">
                                                     <i class="fas fa-caret-up fa-2x"></i>
                                                 </button>
@@ -95,7 +100,7 @@
                                     <div class="row justify-content-center">
                                         @if (@Model.IsAuthenticated)
                                         {
-                                            <form asp-controller="Comment" asp-action="DownVote" asp-route-id="@comment.Id" data-ajax="true">
+                                            <form asp-controller="Comment" asp-action="DownVote" asp-route-id="@comment.Id" data-ajax="true" asp-antiforgery="true">
                                                 <button type="submit">
                                                     <i class="fas fa-caret-down fa-2x"></i>
                                                 </button>
@@ -112,7 +117,7 @@
                                     @if (!@comment.IsAnswer && @Model.Owner)
                                     {
                                         <div class="row justify-content-center">
-                                            <form asp-controller="Comment" asp-action="Accept" asp-route-id="@comment.Id" data-ajax="true">
+                                            <form asp-controller="Comment" asp-action="Accept" asp-route-id="@comment.Id" data-ajax="true" asp-antiforgery="true">
                                                 <button type="submit">
                                                     <i class="fas fa-check fa-2x"></i>
                                                 </button>
@@ -134,7 +139,7 @@
                                 </p>
                                 @if (@Model.Moderator)
                                 {
-                                    <form asp-controller="Comment" asp-action="Delete" asp-route-id="@comment.Id" data-ajax="true">
+                                    <form asp-controller="Comment" asp-action="Delete" asp-route-id="@comment.Id" data-ajax="true" asp-antiforgery="true">
                                         <button type="submit" class="btn btn-sm btn-danger d-none d-md-inline-block">
                                             Delete
                                         </button>
@@ -155,12 +160,11 @@
             <div class="card-body">
                 <form class="form" novalidate enctype="multipart/form-data" method="Post" asp-area="" asp-controller="Question"
                       asp-action="AddComment" asp-antiforgery="true">
-                    <div asp-validation-summary="All" class="text-danger"></div>
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <input asp-for="Id" type="hidden" />
                     <div class="card-body">
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Post Answer</label>
+                            <label class="col-sm-2 col-form-label">Post Your Comment</label>
                             <div class="col-sm-10">
                                 <textarea type="text" name="comment" class="form-control" asp-for="Comment"
                                           id="comment"></textarea>
@@ -173,7 +177,7 @@
                     <div class="card-footer">
                         @if (@Model.IsAuthenticated)
                         {
-                            <button type="submit" class="btn btn-info">Post Your Answer</button>
+                            <button type="submit" class="btn btn-info">Post</button>
                         }
                         else
                         {

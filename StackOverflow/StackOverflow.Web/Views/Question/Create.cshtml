@@ -1,6 +1,6 @@
 ﻿@model CreateQuestionModel
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Ask Question";
 }
 
 <!-- Content Header (Page header) -->
@@ -8,12 +8,12 @@
     <div class="container">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0"> Create Question</h1>
+                <h1 class="m-0"> Ask Question</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active">Create Question</li>
+                    <li class="breadcrumb-item"><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li class="breadcrumb-item active">Ask Question</li>
                 </ol>
             </div><!-- /.col -->
         </div><!-- /.row -->
@@ -62,13 +62,19 @@
 </div>
 
 @section Scripts {
-<partial name="_ValidationScriptsPartial" />
-
 <script>
     $(document).ready(function() {
         $('#body').summernote({
             placeholder: 'Include all the information someone would need to answer your question',
-            height: 100
+            height: 200,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['view', ['fullscreen', 'codeview', 'help']]
+            ]
         });
     });
 </script>

@@ -13,7 +13,7 @@ namespace StackOverflow.Web.Models.Comment
         public Guid QuestionId { get; set; }
         public BO.Question Question { get; set; }
         [Required]
-        [StringLength(1000, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 10)]
+        [StringLength(10000, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 10)]
         public string Body { get; set; }
         public bool IsAnswer { get; set; }
         private ICommentService _commentService;

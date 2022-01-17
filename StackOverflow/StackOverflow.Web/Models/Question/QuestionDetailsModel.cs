@@ -9,6 +9,7 @@ namespace StackOverflow.Web.Models.Question
 {
     public class QuestionDetailsModel
     {
+        [Required]
         public Guid Id { get; set; }
         public string Title { get; set; }
         public string Body { get; set; }

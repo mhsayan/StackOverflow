@@ -12,7 +12,7 @@ namespace StackOverflow.Web.Models.Question
         [Required]
         public Guid Id { get; set; }
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 15)]
+        [StringLength(200, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 15)]
         public string Title { get; set; }
         [Required]
         [StringLength(10000, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 10)]

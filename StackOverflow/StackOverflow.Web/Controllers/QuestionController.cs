@@ -49,7 +49,7 @@ namespace StackOverflow.Web.Controllers
                 model.Resolve(_scope);
                 await model.CreateQuestionAsync();
 
-                return View(model);
+                return RedirectToAction(nameof(Index), "Home");
             }
             catch (Exception ex)
             {
@@ -65,9 +65,7 @@ namespace StackOverflow.Web.Controllers
         public RedirectToActionResult AddComment(QuestionDetailsModel model)
         {
             if (!ModelState.IsValid)
-            {
                 RedirectToAction(nameof(Index), "Home");
-            }
 
             try
             {
