@@ -56,9 +56,13 @@ namespace StackOverflow.Platform.Services
         public IList<BO.Question> GetQuestionListAsync()
         {
             var questionEntities = _unitOfWork.Questions.GetAll();
+            var questionList = from q in questionEntities
+                               orderby q.CreateDate descending
+                               select q;
+
             var questions = new List<BO.Question>();
 
-            foreach (var entity in questionEntities)
+            foreach (var entity in questionList)
             {
                 var question = _mapper.Map<BO.Question>(entity);
                 questions.Add(question);
