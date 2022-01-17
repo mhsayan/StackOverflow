@@ -25,6 +25,7 @@ namespace StackOverflow.Platform.Services
         {
             if (question == null)
                 throw new InvalidParameterException("Received null business object.");
+
             var user = await _profileService.GetUserAsync();
 
             question.ApplicationUserId = user.Id;
@@ -34,6 +35,22 @@ namespace StackOverflow.Platform.Services
 
             _unitOfWork.Questions.Add(questionEntity);
             _unitOfWork.Save();
+        }
+
+        public void EditQuestion(BO.Question question)
+        {
+            if (question == null)
+                throw new InvalidParameterException("Received null business object.");
+
+            var questionEntity = _unitOfWork.Questions.GetById(question.Id);
+
+            if (questionEntity != null)
+            {
+                _mapper.Map(question, questionEntity);
+                _unitOfWork.Save();
+            }
+            else
+                throw new InvalidOperationException("Question Edit failed.");
         }
 
         public IList<BO.Question> GetQuestionListAsync()
@@ -50,7 +67,7 @@ namespace StackOverflow.Platform.Services
             return questions;
         }
 
-        public BO.Question GetQuestionAsync(Guid id)
+        public BO.Question GetQuestion(Guid id)
         {
             var questionEntity = _unitOfWork.Questions.Get(q => q.Id == id, "Comments").FirstOrDefault();
             var question = _mapper.Map<BO.Question>(questionEntity);

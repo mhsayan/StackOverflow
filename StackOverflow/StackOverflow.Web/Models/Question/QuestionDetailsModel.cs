@@ -19,7 +19,7 @@ namespace StackOverflow.Web.Models.Question
         public bool Moderator { get; set; }
         public bool IsAuthenticated { get; set; }
         [Required]
-        [StringLength(1000, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 10)]
+        [StringLength(10000, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 10)]
         public string Comment { get; set; }
         private ILifetimeScope _scope;
         private IQuestionService _questionService;
@@ -56,7 +56,7 @@ namespace StackOverflow.Web.Models.Question
 
         public void GetQuestionDetailsAsync(Guid id)
         {
-            var question = _questionService.GetQuestionAsync(id);
+            var question = _questionService.GetQuestion(id);
 
             foreach (var comment in question.Comments)
             {

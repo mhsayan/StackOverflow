@@ -31,7 +31,7 @@
                         <a href="#"><h2>@Model.Title</h2></a>
                     </div>
                     <div class="col-2">
-                        <a type="button" class="btn btn-primary d-grid gap-2 d-flex float-right"
+                        <a class="btn btn-primary d-grid gap-2 d-flex float-right"
                            asp-area="" asp-controller="Question" asp-action="Create">Ask Question</a>
                     </div>
                 </div>
@@ -52,6 +52,8 @@
                                     Delete
                                 </button>
                             </form>
+                            <a class="btn btn-primary d-grid gap-2 d-flex float-right"
+                           asp-controller="Question" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
                         }
                     </div>
                 </div>
@@ -153,6 +155,7 @@
             <div class="card-body">
                 <form class="form" novalidate enctype="multipart/form-data" method="Post" asp-area="" asp-controller="Question"
                       asp-action="AddComment" asp-antiforgery="true">
+                    <div asp-validation-summary="All" class="text-danger"></div>
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <input asp-for="Id" type="hidden" />
                     <div class="card-body">

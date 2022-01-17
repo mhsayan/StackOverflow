@@ -14,6 +14,7 @@ namespace StackOverflow.Web
             builder.RegisterType<QuestionDetailsModel>().AsSelf();
             builder.RegisterType<CommentModel>().AsSelf();
             builder.RegisterType<VoteModel>().AsSelf();
+            builder.RegisterType<EditQuestionModel>().AsSelf();
 
             base.Load(builder);
         }

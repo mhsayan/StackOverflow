@@ -12,6 +12,7 @@ namespace StackOverflow.Web.Profiles
         {
             CreateMap<CreateQuestionModel, BO.Question>().ReverseMap();
             CreateMap<QuestionDetailsModel, BO.Question>().ReverseMap();
+            CreateMap<EditQuestionModel, BO.Question>().ReverseMap();
             CreateMap<CommentModel, BO.Comment>().ReverseMap();
         }
     }

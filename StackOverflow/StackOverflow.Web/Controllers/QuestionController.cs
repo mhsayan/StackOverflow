@@ -85,9 +85,40 @@ namespace StackOverflow.Web.Controllers
             }
         }
 
-        public IActionResult Edit()
+        [HttpGet]
+        public IActionResult Edit(Guid id)
         {
-            return View();
+            var model = _scope.Resolve<EditQuestionModel>();
+            model.Resolve(_scope);
+            model.LoadModelData(id);
+
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(EditQuestionModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            try
+            {
+                model.Resolve(_scope);
+                model.Edit();
+
+                return RedirectToAction(nameof(Details), "Question", new { id = model.Id });
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", ex.Message);
+                _logger.LogError(ex, "Failed to edit the question.");
+
+                return RedirectToAction(nameof(Details), "Question", new { id = model.Id });
+            }
         }
 
         [HttpPost]
