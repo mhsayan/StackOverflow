@@ -1,5 +1,4 @@
-﻿using System.Security.Claims;
-using StackOverflow.Membership.Entities;
+﻿using StackOverflow.Membership.Entities;
 
 namespace StackOverflow.Platform.Services
 {

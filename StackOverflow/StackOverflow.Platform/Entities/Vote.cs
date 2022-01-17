@@ -1,5 +1,4 @@
 ﻿using StackOverflow.Data;
-using StackOverflow.Membership.Entities;
 
 namespace StackOverflow.Platform.Entities
 {

@@ -1,7 +1,4 @@
-﻿using System.Globalization;
-using System.Linq.Dynamic.Core;
-using AutoMapper;
-using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
 using StackOverflow.Platform.Exceptions;
 using StackOverflow.Platform.UnitOfWorks;
 using BO = StackOverflow.Platform.BusinessObjects;
@@ -12,16 +9,12 @@ namespace StackOverflow.Platform.Services
     public class CommentService : ICommentService
     {
         private readonly IPlatformUnitOfWork _unitOfWork;
-        private readonly IProfileService _profileService;
         private IMapper _mapper;
 
-        public CommentService(IPlatformUnitOfWork unitOfWork,
-            IMapper mapper,
-            IProfileService profileService)
+        public CommentService(IPlatformUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _profileService = profileService;
         }
 
         public void CreateCommentAsync(string commentBody, Guid questionId)

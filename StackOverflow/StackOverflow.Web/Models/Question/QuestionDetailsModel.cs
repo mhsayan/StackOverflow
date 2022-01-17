@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Autofac;
 using AutoMapper;
-using StackOverflow.Platform.Exceptions;
 using StackOverflow.Platform.Services;
 using BO = StackOverflow.Platform.BusinessObjects;
 

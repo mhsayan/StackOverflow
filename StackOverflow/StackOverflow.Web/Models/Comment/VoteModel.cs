@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Autofac;
-using AutoMapper;
 using StackOverflow.Platform.Exceptions;
 using StackOverflow.Platform.Services;
 using BO = StackOverflow.Platform.BusinessObjects;
@@ -12,26 +11,19 @@ namespace StackOverflow.Web.Models.Comment
         [Required]
         public Guid QuestionId { get; set; }
         public Guid CommentId { get; set; }
-        public BO.Question Question { get; set; }
-        [Required]
-        [StringLength(1000, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 10)]
-        public string Body { get; set; }
-        public bool IsAnswer { get; set; }
         private ICommentService _commentService;
         private IVoteService _voteService;
         private IProfileService _profileService;
         private ILifetimeScope _scope;
-        private IMapper _mapper;
 
         public VoteModel()
         {
 
         }
 
-        public VoteModel(IMapper mapper, ICommentService commentService,
+        public VoteModel(ICommentService commentService,
             IVoteService voteService, IProfileService profileService)
         {
-            _mapper = mapper;
             _commentService = commentService;
             _voteService = voteService;
             _profileService = profileService;
@@ -40,7 +32,6 @@ namespace StackOverflow.Web.Models.Comment
         public void Resolve(ILifetimeScope scope)
         {
             _scope = scope;
-            _mapper = _scope.Resolve<IMapper>();
             _commentService = _scope.Resolve<ICommentService>();
             _voteService = _scope.Resolve<IVoteService>();
             _profileService = _scope.Resolve<IProfileService>();

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using StackOverflow.Data;
+﻿using StackOverflow.Data;
 using StackOverflow.Membership.Entities;
 
 namespace StackOverflow.Platform.Entities
