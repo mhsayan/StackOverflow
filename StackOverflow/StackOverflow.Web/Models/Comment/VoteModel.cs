@@ -63,10 +63,13 @@ namespace StackOverflow.Web.Models.Comment
 
             var userVote = await _voteService.GetUserVote(id);
 
-            if (userVote != null && userVote.DownVote)
+            if (userVote != null)
             {
-                userVote.DownVote = false;
-                userVote.UpVote = true;
+                if (userVote.DownVote)
+                {
+                    userVote.DownVote = false;
+                    userVote.UpVote = true;
+                }
 
                 _voteService.UpdateVote(userVote);
             }
@@ -91,10 +94,13 @@ namespace StackOverflow.Web.Models.Comment
 
             var userVote = await _voteService.GetUserVote(id);
 
-            if (userVote != null && userVote.UpVote)
+            if (userVote != null)
             {
-                userVote.DownVote = true;
-                userVote.UpVote = false;
+                if (userVote.UpVote)
+                {
+                    userVote.DownVote = true;
+                    userVote.UpVote = false;
+                }
 
                 _voteService.UpdateVote(userVote);
             }
