@@ -20,19 +20,17 @@
 
 **Project Configuration**:
 
-1. Create a new database
+1. Update  `Data Source` address in `DefaultConnectionString `under`appsettings.json`
 
-2. Change `DefaultConnection` in `appsettings.json`
-
-3. Run this command from **Package Manager Console**:
+2. Run this command from **Package Manager Console**:
    
    1. `dotnet ef database update --project StackOverflow.Web --context ApplicationDbContext`
    
    2. `dotnet ef database update --project StackOverflow.Web --context PlatformDbContext`
 
-4. Run the project.
+3. Run the project.
 
-5. Create an ser account or use Moderator account.
+4. Create an ser account or use Moderator account.
    
    1. Moderator Email: moderator@stackoverflow.com
    
