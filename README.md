@@ -22,7 +22,7 @@
 
 1. Create a new database
 
-2. Change `DefaultConnectionString` in `appsettings.json`
+2. Change `DefaultConnection` in `appsettings.json`
 
 3. Run this command from **Package Manager Console**:
    
