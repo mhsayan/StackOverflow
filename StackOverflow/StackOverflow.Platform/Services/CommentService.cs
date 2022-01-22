@@ -38,7 +38,7 @@ namespace StackOverflow.Platform.Services
             if (id == Guid.Empty)
                 throw new InvalidParameterException("Comment id is required.");
 
-            var commentEntity = _unitOfWork.Comments.Get(q => q.Id == id, "Votes").FirstOrDefault();
+            var commentEntity = _unitOfWork.Comments.Get(q => q.Id == id, "CommentVotes").FirstOrDefault();
             var comment = _mapper.Map<BO.Comment>(commentEntity);
 
             return comment;

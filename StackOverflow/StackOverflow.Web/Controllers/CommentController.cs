@@ -65,7 +65,7 @@ namespace StackOverflow.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> UpVote(Guid id)
         {
-            var model = _scope.Resolve<VoteModel>();
+            var model = _scope.Resolve<CommentVoteModel>();
             model.Resolve(_scope);
             model.LoadModelData(id);
             await model.UpVote(id);
@@ -77,7 +77,7 @@ namespace StackOverflow.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DownVote(Guid id)
         {
-            var model = _scope.Resolve<VoteModel>();
+            var model = _scope.Resolve<CommentVoteModel>();
             model.Resolve(_scope);
             model.LoadModelData(id);
             await model.DownVote(id);

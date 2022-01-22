@@ -10,6 +10,6 @@ namespace StackOverflow.Platform.BusinessObjects
         public string Body { get; set; }
         public bool IsAnswer { get; set; }
         public int TotalVote { get; set; }
-        public IList<Vote> Votes { get; set; }
+        public IList<CommentVote> Votes { get; set; }
     }
 }

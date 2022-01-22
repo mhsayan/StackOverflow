@@ -13,7 +13,7 @@ namespace StackOverflow.Web
             builder.RegisterType<CreateQuestionModel>().AsSelf();
             builder.RegisterType<QuestionDetailsModel>().AsSelf();
             builder.RegisterType<CommentModel>().AsSelf();
-            builder.RegisterType<VoteModel>().AsSelf();
+            builder.RegisterType<CommentVoteModel>().AsSelf();
             builder.RegisterType<EditQuestionModel>().AsSelf();
 
             base.Load(builder);

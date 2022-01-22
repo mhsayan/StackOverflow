@@ -6,14 +6,14 @@ using EO = StackOverflow.Platform.Entities;
 
 namespace StackOverflow.Platform.Services
 {
-    public class VoteService : IVoteService
+    public class CommentVoteService : ICommentVoteService
     {
         private readonly IPlatformUnitOfWork _unitOfWork;
         private readonly IProfileService _profileService;
         private readonly ICommentService _commentService;
         private IMapper _mapper;
 
-        public VoteService(IPlatformUnitOfWork unitOfWork,
+        public CommentVoteService(IPlatformUnitOfWork unitOfWork,
             IMapper mapper, IProfileService profileService,
             ICommentService commentService)
         {
@@ -23,7 +23,7 @@ namespace StackOverflow.Platform.Services
             _commentService = commentService;
         }
 
-        public async Task<BO.Vote?> GetUserVote(Guid commentId)
+        public async Task<BO.CommentVote?> GetUserVote(Guid commentId)
         {
             if (commentId == Guid.Empty)
                 throw new InvalidParameterException("Comment id is required.");
@@ -35,30 +35,30 @@ namespace StackOverflow.Platform.Services
                 return null;
             }
 
-            var voteEntity = _unitOfWork.Votes.Get(c => c.CommentId == commentId && c.ApplicationUserId == user.Id, "").FirstOrDefault();
+            var voteEntity = _unitOfWork.CommentVotes.Get(c => c.CommentId == commentId && c.ApplicationUserId == user.Id, "").FirstOrDefault();
 
-            var vote = _mapper.Map<BO.Vote>(voteEntity);
+            var vote = _mapper.Map<BO.CommentVote>(voteEntity);
 
             return vote;
         }
 
-        public void CreateVote(BO.Vote vote)
+        public void CreateVote(BO.CommentVote vote)
         {
             if (vote == null)
                 throw new InvalidOperationException("New vote creation failed.");
 
-            var voteEntity = _mapper.Map<EO.Vote>(vote);
+            var voteEntity = _mapper.Map<EO.CommentVote>(vote);
 
-            _unitOfWork.Votes.Add(voteEntity);
+            _unitOfWork.CommentVotes.Add(voteEntity);
             _unitOfWork.Save();
         }
 
-        public void UpdateVote(BO.Vote vote)
+        public void UpdateVote(BO.CommentVote vote)
         {
             if (vote == null)
                 throw new InvalidOperationException("Vote update failed.");
 
-            var voteEntity = _unitOfWork.Votes.GetById(vote.Id);
+            var voteEntity = _unitOfWork.CommentVotes.GetById(vote.Id);
             _mapper.Map(vote, voteEntity);
 
             _unitOfWork.Save();
@@ -66,8 +66,8 @@ namespace StackOverflow.Platform.Services
 
         public int VoteCount(Guid commentId)
         {
-            var upVotes = _unitOfWork.Votes.GetCount(v => v.UpVote == true && v.CommentId == commentId);
-            var downVotes = _unitOfWork.Votes.GetCount(v => v.DownVote == true && v.CommentId == commentId);
+            var upVotes = _unitOfWork.CommentVotes.GetCount(v => v.UpVote == true && v.CommentId == commentId);
+            var downVotes = _unitOfWork.CommentVotes.GetCount(v => v.DownVote == true && v.CommentId == commentId);
 
             return upVotes - downVotes;
         }

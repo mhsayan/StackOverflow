@@ -5,10 +5,10 @@ using StackOverflow.Platform.Entities;
 
 namespace StackOverflow.Platform.Repositories
 {
-    public class VoteRepository : Repository<Vote, Guid>,
-        IVoteRepository
+    public class CommentVoteRepository : Repository<CommentVote, Guid>,
+        ICommentVoteRepository
     {
-        public VoteRepository(IPlatformDbContext context)
+        public CommentVoteRepository(IPlatformDbContext context)
             : base((DbContext)context)
         {
         }

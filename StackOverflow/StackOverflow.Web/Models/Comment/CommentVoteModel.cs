@@ -6,26 +6,26 @@ using BO = StackOverflow.Platform.BusinessObjects;
 
 namespace StackOverflow.Web.Models.Comment
 {
-    public class VoteModel
+    public class CommentVoteModel
     {
         [Required]
         public Guid QuestionId { get; set; }
         public Guid CommentId { get; set; }
         private ICommentService _commentService;
-        private IVoteService _voteService;
+        private ICommentVoteService _commentVoteService;
         private IProfileService _profileService;
         private ILifetimeScope _scope;
 
-        public VoteModel()
+        public CommentVoteModel()
         {
 
         }
 
-        public VoteModel(ICommentService commentService,
-            IVoteService voteService, IProfileService profileService)
+        public CommentVoteModel(ICommentService commentService,
+            ICommentVoteService commentVoteService, IProfileService profileService)
         {
             _commentService = commentService;
-            _voteService = voteService;
+            _commentVoteService = commentVoteService;
             _profileService = profileService;
         }
 
@@ -33,7 +33,7 @@ namespace StackOverflow.Web.Models.Comment
         {
             _scope = scope;
             _commentService = _scope.Resolve<ICommentService>();
-            _voteService = _scope.Resolve<IVoteService>();
+            _commentVoteService = _scope.Resolve<ICommentVoteService>();
             _profileService = _scope.Resolve<IProfileService>();
         }
 
@@ -52,7 +52,7 @@ namespace StackOverflow.Web.Models.Comment
             if (id == Guid.Empty)
                 throw new InvalidParameterException("Comment id is required to up vote.");
 
-            var userVote = await _voteService.GetUserVote(id);
+            var userVote = await _commentVoteService.GetUserVote(id);
 
             if (userVote != null)
             {
@@ -62,19 +62,19 @@ namespace StackOverflow.Web.Models.Comment
                     userVote.UpVote = true;
                 }
 
-                _voteService.UpdateVote(userVote);
+                _commentVoteService.UpdateVote(userVote);
             }
             else
             {
                 var user = await _profileService.GetUserAsync();
-                var vote = new BO.Vote()
+                var vote = new BO.CommentVote()
                 {
                     UpVote = true,
                     ApplicationUserId = user.Id,
                     CommentId = CommentId
                 };
 
-                _voteService.CreateVote(vote);
+                _commentVoteService.CreateVote(vote);
             }
         }
 
@@ -83,7 +83,7 @@ namespace StackOverflow.Web.Models.Comment
             if (id == Guid.Empty)
                 throw new InvalidParameterException("Comment id is required to down vote.");
 
-            var userVote = await _voteService.GetUserVote(id);
+            var userVote = await _commentVoteService.GetUserVote(id);
 
             if (userVote != null)
             {
@@ -93,20 +93,20 @@ namespace StackOverflow.Web.Models.Comment
                     userVote.UpVote = false;
                 }
 
-                _voteService.UpdateVote(userVote);
+                _commentVoteService.UpdateVote(userVote);
             }
             else
             {
                 var user = await _profileService.GetUserAsync();
 
-                var vote = new BO.Vote()
+                var vote = new BO.CommentVote()
                 {
                     DownVote = true,
                     ApplicationUserId = user.Id,
                     CommentId = CommentId
                 };
 
-                _voteService.CreateVote(vote);
+                _commentVoteService.CreateVote(vote);
             }
         }
     }

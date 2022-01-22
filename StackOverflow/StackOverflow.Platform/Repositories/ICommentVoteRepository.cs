@@ -3,7 +3,7 @@ using StackOverflow.Platform.Entities;
 
 namespace StackOverflow.Platform.Repositories
 {
-    public interface IVoteRepository : IRepository<Vote, Guid>
+    public interface ICommentVoteRepository : IRepository<CommentVote, Guid>
     {
     }
 }

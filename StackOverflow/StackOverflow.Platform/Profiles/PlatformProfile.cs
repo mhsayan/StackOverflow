@@ -10,7 +10,7 @@ namespace StackOverflow.Platform.Profiles
         {
             CreateMap<EO.Question, BO.Question>().ReverseMap();
             CreateMap<EO.Comment, BO.Comment>().ReverseMap();
-            CreateMap<EO.Vote, BO.Vote>().ReverseMap();
+            CreateMap<EO.CommentVote, BO.CommentVote>().ReverseMap();
         }
     }
 }

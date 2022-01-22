@@ -106,6 +106,34 @@ namespace StackOverflow.Web.Data.Migrations
                     b.ToTable("Comments");
                 });
 
+            modelBuilder.Entity("StackOverflow.Platform.Entities.CommentVote", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ApplicationUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CommentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("DownVote")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("UpVote")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId")
+                        .IsUnique();
+
+                    b.HasIndex("CommentId");
+
+                    b.ToTable("CommentVotes");
+                });
+
             modelBuilder.Entity("StackOverflow.Platform.Entities.Question", b =>
                 {
                     b.Property<Guid>("Id")
@@ -133,31 +161,6 @@ namespace StackOverflow.Web.Data.Migrations
                     b.ToTable("Questions");
                 });
 
-            modelBuilder.Entity("StackOverflow.Platform.Entities.Vote", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ApplicationUserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("CommentId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("DownVote")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("UpVote")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CommentId");
-
-                    b.ToTable("Votes");
-                });
-
             modelBuilder.Entity("StackOverflow.Platform.Entities.Comment", b =>
                 {
                     b.HasOne("StackOverflow.Platform.Entities.Question", "Question")
@@ -167,6 +170,25 @@ namespace StackOverflow.Web.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Question");
+                });
+
+            modelBuilder.Entity("StackOverflow.Platform.Entities.CommentVote", b =>
+                {
+                    b.HasOne("StackOverflow.Membership.Entities.ApplicationUser", "ApplicationUser")
+                        .WithOne()
+                        .HasForeignKey("StackOverflow.Platform.Entities.CommentVote", "ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("StackOverflow.Platform.Entities.Comment", "Comment")
+                        .WithMany("CommentVotes")
+                        .HasForeignKey("CommentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("ApplicationUser");
+
+                    b.Navigation("Comment");
                 });
 
             modelBuilder.Entity("StackOverflow.Platform.Entities.Question", b =>
@@ -180,20 +202,9 @@ namespace StackOverflow.Web.Data.Migrations
                     b.Navigation("ApplicationUser");
                 });
 
-            modelBuilder.Entity("StackOverflow.Platform.Entities.Vote", b =>
-                {
-                    b.HasOne("StackOverflow.Platform.Entities.Comment", "Comment")
-                        .WithMany("Votes")
-                        .HasForeignKey("CommentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Comment");
-                });
-
             modelBuilder.Entity("StackOverflow.Platform.Entities.Comment", b =>
                 {
-                    b.Navigation("Votes");
+                    b.Navigation("CommentVotes");
                 });
 
             modelBuilder.Entity("StackOverflow.Platform.Entities.Question", b =>

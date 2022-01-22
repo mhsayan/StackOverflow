@@ -41,9 +41,16 @@ namespace StackOverflow.Platform.Contexts
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Comment>()
-                .HasMany(c => c.Votes)
+                .HasMany(c => c.CommentVotes)
                 .WithOne(c => c.Comment)
                 .HasForeignKey(v => v.CommentId)
+                .OnDelete(DeleteBehavior.Restrict);
+            
+            modelBuilder.Entity<ApplicationUser>()
+                .ToTable("AspNetUsers", x => x.ExcludeFromMigrations())
+                .HasOne<CommentVote>()
+                .WithOne(x => x.ApplicationUser)
+                .HasForeignKey<CommentVote>(c => c.ApplicationUserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             base.OnModelCreating(modelBuilder);
@@ -51,6 +58,6 @@ namespace StackOverflow.Platform.Contexts
 
         public DbSet<Question> Questions { get; set; }
         public DbSet<Comment> Comments { get; set; }
-        public DbSet<Vote> Votes { get; set; }
+        public DbSet<CommentVote> CommentVotes { get; set; }
     }
 }

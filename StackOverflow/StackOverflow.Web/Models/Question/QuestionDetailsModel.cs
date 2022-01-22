@@ -25,7 +25,7 @@ namespace StackOverflow.Web.Models.Question
         private ILifetimeScope _scope;
         private IQuestionService _questionService;
         private ICommentService _commentService;
-        private IVoteService _voteService;
+        private ICommentVoteService _commentVoteService;
         private IProfileService _profileService { get; set; }
         private IMapper _mapper;
 
@@ -41,18 +41,18 @@ namespace StackOverflow.Web.Models.Question
             _mapper = _scope.Resolve<IMapper>();
             _commentService = _scope.Resolve<ICommentService>();
             _profileService = _scope.Resolve<IProfileService>();
-            _voteService = _scope.Resolve<IVoteService>();
+            _commentVoteService = _scope.Resolve<ICommentVoteService>();
         }
 
         public QuestionDetailsModel(IQuestionService questionService, IMapper mapper,
             ICommentService commentService, IProfileService profileService,
-            IVoteService voteService)
+            ICommentVoteService commentVoteService)
         {
             _questionService = questionService;
             _mapper = mapper;
             _commentService = commentService;
             _profileService = profileService;
-            _voteService = voteService;
+            _commentVoteService = commentVoteService;
         }
 
         public void GetQuestionDetailsAsync(Guid questionId)
@@ -64,7 +64,7 @@ namespace StackOverflow.Web.Models.Question
 
             foreach (var comment in question.Comments)
             {
-                comment.TotalVote = _voteService.VoteCount(comment.Id);
+                comment.TotalVote = _commentVoteService.VoteCount(comment.Id);
             }
 
             _mapper.Map(question, this);

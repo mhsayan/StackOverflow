@@ -9,6 +9,6 @@ namespace StackOverflow.Platform.Entities
         public Question Question { get; set; }
         public string Body { get; set; }
         public bool IsAnswer { get; set; }
-        public IList<Vote> Votes { get; set; }
+        public IList<CommentVote> CommentVotes { get; set; }
     }
 }
