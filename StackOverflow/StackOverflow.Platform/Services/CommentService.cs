@@ -9,7 +9,7 @@ namespace StackOverflow.Platform.Services
     public class CommentService : ICommentService
     {
         private readonly IPlatformUnitOfWork _unitOfWork;
-        private IMapper _mapper;
+        private readonly IMapper _mapper;
 
         public CommentService(IPlatformUnitOfWork unitOfWork, IMapper mapper)
         {
@@ -19,9 +19,11 @@ namespace StackOverflow.Platform.Services
 
         public void CreateCommentAsync(string commentBody, Guid questionId)
         {
-            var comment = new EO.Comment();
-            comment.Body = commentBody;
-            comment.QuestionId = questionId;
+            var comment = new EO.Comment
+            {
+                Body = commentBody,
+                QuestionId = questionId
+            };
 
             _unitOfWork.Comments.Add(comment);
             _unitOfWork.Save();
@@ -30,6 +32,16 @@ namespace StackOverflow.Platform.Services
         public void Delete(Guid id)
         {
             _unitOfWork.Comments.Remove(id);
+            _unitOfWork.Save();
+        }
+
+        public void Delete(IList<BO.Comment> comments)
+        {
+            foreach (var comment in comments)
+            {
+                _unitOfWork.Comments.Remove(comment.Id);
+            }
+
             _unitOfWork.Save();
         }
 

@@ -183,7 +183,7 @@ namespace StackOverflow.Web.Data.Migrations
                     b.HasOne("StackOverflow.Platform.Entities.Comment", "Comment")
                         .WithMany("CommentVotes")
                         .HasForeignKey("CommentId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("ApplicationUser");

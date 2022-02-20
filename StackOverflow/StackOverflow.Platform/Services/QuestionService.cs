@@ -10,15 +10,17 @@ namespace StackOverflow.Platform.Services
     {
         private readonly IPlatformUnitOfWork _unitOfWork;
         private readonly IProfileService _profileService;
+        private readonly ICommentService _commentService;
         private IMapper _mapper;
 
         public QuestionService(IPlatformUnitOfWork unitOfWork,
-            IMapper mapper,
-            IProfileService profileService)
+            IMapper mapper, IProfileService profileService,
+            ICommentService commentService)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _profileService = profileService;
+            _commentService = commentService;
         }
 
         public async Task CreateQuestionAsync(BO.Question question)
@@ -71,7 +73,7 @@ namespace StackOverflow.Platform.Services
             return questions;
         }
 
-        public BO.Question GetQuestion(Guid id)
+        public BO.Question? GetQuestion(Guid id)
         {
             var questionEntity = _unitOfWork.Questions.Get(q => q.Id == id, "Comments").FirstOrDefault();
             var question = _mapper.Map<BO.Question>(questionEntity);
@@ -81,7 +83,17 @@ namespace StackOverflow.Platform.Services
 
         public void Delete(Guid id)
         {
-            _unitOfWork.Questions.Remove(id);
+            if (id == Guid.Empty)
+                throw new InvalidParameterException("Received empty question id.");
+
+            var questions = GetQuestion(id);
+
+            if (questions != null && questions.Comments.Count != 0)
+            {
+                _commentService.Delete(questions.Comments);
+            }
+            
+            _unitOfWork.Questions.Remove(questions.Id);
             _unitOfWork.Save();
         }
     }

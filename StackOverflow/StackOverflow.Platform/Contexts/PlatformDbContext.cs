@@ -37,21 +37,18 @@ namespace StackOverflow.Platform.Contexts
             modelBuilder.Entity<Question>()
                 .HasMany(q => q.Comments)
                 .WithOne(c => c.Question)
-                .HasForeignKey(c => c.QuestionId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .HasForeignKey(c => c.QuestionId);
 
             modelBuilder.Entity<Comment>()
                 .HasMany(c => c.CommentVotes)
                 .WithOne(c => c.Comment)
-                .HasForeignKey(v => v.CommentId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .HasForeignKey(v => v.CommentId);
             
             modelBuilder.Entity<ApplicationUser>()
                 .ToTable("AspNetUsers", x => x.ExcludeFromMigrations())
                 .HasOne<CommentVote>()
                 .WithOne(x => x.ApplicationUser)
-                .HasForeignKey<CommentVote>(c => c.ApplicationUserId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .HasForeignKey<CommentVote>(c => c.ApplicationUserId);
 
             base.OnModelCreating(modelBuilder);
         }

@@ -12,7 +12,7 @@ using StackOverflow.Platform.Contexts;
 namespace StackOverflow.Web.Data.Migrations
 {
     [DbContext(typeof(PlatformDbContext))]
-    [Migration("20220122063737_AddCommentVoteTable")]
+    [Migration("20220122071727_AddCommentVoteTable")]
     partial class AddCommentVoteTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -185,7 +185,7 @@ namespace StackOverflow.Web.Data.Migrations
                     b.HasOne("StackOverflow.Platform.Entities.Comment", "Comment")
                         .WithMany("CommentVotes")
                         .HasForeignKey("CommentId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("ApplicationUser");
